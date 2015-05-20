@@ -1,12 +1,8 @@
 package menjacnica;
-
 import java.net.URL;
 import java.util.LinkedList;
-
 import org.apache.commons.io.IOUtils;
 import org.json.JSONObject;
-
-
 
 public class JsonRatesAPIKomunikacija {
 
@@ -42,9 +38,11 @@ public class JsonRatesAPIKomunikacija {
 	//Proba da li metoda radi
 	public static void main(String[] args) {
 		JsonRatesAPIKomunikacija apiKomunikacija = new JsonRatesAPIKomunikacija();
-		String[] valute = new String[2];
+		String[] valute = new String[4];
 		valute[0]="EUR";
 		valute[1]="USD";
+		valute[2]="CAD";
+		valute[3]="HRK";
 		LinkedList<Valuta> kursevi = apiKomunikacija.vratiIznosKurseva(valute);
 		for (int i = 0; i < kursevi.size(); i++) {
 			System.out.println(kursevi.get(i));
