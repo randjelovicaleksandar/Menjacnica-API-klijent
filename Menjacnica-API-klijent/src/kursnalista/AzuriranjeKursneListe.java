@@ -63,4 +63,5 @@ public class AzuriranjeKursneListe {
 		GregorianCalendar trenutniDatum = new GregorianCalendar();
  		upisiValute(kursnaLista, trenutniDatum);
 	}
+	
 }
