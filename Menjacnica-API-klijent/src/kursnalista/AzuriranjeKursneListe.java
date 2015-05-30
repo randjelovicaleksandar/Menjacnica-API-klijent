@@ -15,12 +15,13 @@ import menjacnicautility.MenjacnicaUtility;
 
 public class AzuriranjeKursneListe {
 
-	private static final String putanjaDoFajlaKursnaLista = "src/kursnaLista.json";
+	private static final String putanjaDoFajlaKursnaLista = "data/kursnaLista.json";
 	
 	public LinkedList<Valuta> ucitajValute() {
 		LinkedList<Valuta> kursnaListaZaVracanje = new LinkedList<Valuta>();
 		try {
 			FileReader reader = new FileReader(putanjaDoFajlaKursnaLista);
+			
 			Gson gson = new GsonBuilder().create();
 			JsonArray kursnaLista = gson.fromJson(reader, JsonArray.class);
 			kursnaListaZaVracanje = MenjacnicaUtility.rasclanjavanjeJsonKusneListe(kursnaLista);

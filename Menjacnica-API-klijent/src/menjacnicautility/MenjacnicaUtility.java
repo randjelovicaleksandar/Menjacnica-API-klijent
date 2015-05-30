@@ -26,11 +26,11 @@ public class MenjacnicaUtility {
 		LinkedList<Valuta> valute = new LinkedList<Valuta>();
 		
 		for (int i = 0; i < valuteJson.size(); i++) {
-			JsonObject movieJson = (JsonObject) valuteJson.get(i);
+			JsonObject valuteJsonObjekat = (JsonObject) valuteJson.get(i);
 			
 			Valuta v = new Valuta();
-			v.setNaziv(movieJson.get("naziv").getAsString());
-			v.setKurs(movieJson.get("kurs").getAsDouble());
+			v.setNaziv(valuteJsonObjekat.get("naziv").getAsString());
+			v.setKurs(valuteJsonObjekat.get("kurs").getAsDouble());
 			
 			valute.add(v);
 		}
