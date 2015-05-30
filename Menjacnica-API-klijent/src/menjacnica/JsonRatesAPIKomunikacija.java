@@ -1,8 +1,14 @@
 package menjacnica;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.LinkedList;
-import org.apache.commons.io.IOUtils;
-import org.json.JSONObject;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 public class JsonRatesAPIKomunikacija {
 
@@ -12,16 +18,16 @@ public class JsonRatesAPIKomunikacija {
 	public LinkedList<Valuta> vratiIznosKurseva(String[] valute) {
 		LinkedList<Valuta> kursevi = new LinkedList<Valuta>();
 		for (int i = 0; i < valute.length; i++) {
-			try{
-				URL url = new URL( jsonRatesURL + "?" +
+			String url = jsonRatesURL + "?" +
 					"from=" + valute[i] +
-					"&to=RSD" +
-					"&apiKey=" + appKey
-				);
+					"&to=RSD"+
+					"&apiKey=" + appKey;
+			try{
+				String result = sendGet(url);
 				
-				String data = IOUtils.toString(url);
-				JSONObject json = new JSONObject(data);
-				Double rate = json.getDouble("rate");
+				Gson gson = new GsonBuilder().create();
+				JsonObject jsonResult = gson.fromJson(result, JsonObject.class);
+				double rate = Double.parseDouble(jsonResult.get("rate").getAsString());
 				
 				Valuta valuta = new Valuta();
 				valuta.setNaziv(valute[i]);
@@ -33,6 +39,32 @@ public class JsonRatesAPIKomunikacija {
 			}
 		}
 		return kursevi;
+	}
+	
+	private String sendGet(String url) throws IOException {
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		
+		con.setRequestMethod("GET");
+		
+		BufferedReader in = new BufferedReader(
+		        new InputStreamReader(con.getInputStream()));
+		
+		boolean endReading = false;
+		String response = "";
+		
+		while (!endReading) {
+			String s = in.readLine();
+			
+			if (s != null) {
+				response += s;
+			} else {
+				endReading = true;
+			}
+		}
+		in.close();
+ 
+		return response.toString();
 	}
 	
 	//Proba da li metoda radi
